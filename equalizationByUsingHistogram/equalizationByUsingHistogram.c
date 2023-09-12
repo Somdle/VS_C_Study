@@ -7,7 +7,7 @@
 #define ORIGIN_IMAGE_RANGE 8 // 이미지의 범위
 
 // 히스토그램을 보이는 함수
-void showHistogram(long** originImage);
+void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]);
 
 // 메인함수
 int main() {
@@ -31,7 +31,7 @@ int main() {
 	return 0;
 }
 
-void showHistogram(long** originImage) {
+void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	long histogram[ORIGIN_IMAGE_RANGE] = { 0 };
 	long MaxhistogramValue = 0;
 
@@ -51,14 +51,15 @@ void showHistogram(long** originImage) {
 
 	// 히스토그램 출력하기
 	for (int i = MaxhistogramValue; i >= 0; i--) {     // 높이만큼 반복
-		printf("%d", i);                               // Y축 수치 표현
+		printf("%2d", i);                               // Y축 수치 표현
 		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) { // 히스토그램 출력
-			if (histogram[j] = MaxhistogramValue) {
+			if (histogram[j] == MaxhistogramValue) {
 				printf("#");
 			}
 			else {
 				printf(" ");
 			}
 		}
+		printf("\n");
 	}
 }
