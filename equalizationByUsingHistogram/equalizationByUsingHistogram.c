@@ -61,8 +61,11 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	for (int i = MaxhistogramValue; i >= 1; i--) {     // 높이만큼 반복
 		printf("%2d", i);                               // Y축 수치 표현
 		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) { // 히스토그램 출력
-			if (histogram[j] >= i) {
-				printf("#");
+			if (histogram[j] == i) {
+				printf("*");
+			}
+			else if (histogram[j] >= i) {
+				printf("|");
 			}
 			else {
 				printf(" ");
