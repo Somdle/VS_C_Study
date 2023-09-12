@@ -27,11 +27,11 @@ int main() {
 	};
 
 	/*
-		2: 14개
-		3: 22개
-		4: 24개
-		5: 22개
-		6: 18개
+		2: 19
+		3: 29
+		4: 30
+		5: 24
+		6: 19
 	*/
 
 	showHistogram(originImage);
@@ -58,7 +58,7 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	}
 
 	// 히스토그램 출력하기
-	for (int i = MaxhistogramValue; i >= 0; i--) {     // 높이만큼 반복
+	for (int i = MaxhistogramValue; i >= 1; i--) {     // 높이만큼 반복
 		printf("%2d", i);                               // Y축 수치 표현
 		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) { // 히스토그램 출력
 			if (histogram[j] >= i) {
@@ -70,7 +70,7 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 		}
 		printf("\n");
 
-		if (i == 0) {
+		if (i == 1) {
 			printf("  ");
 			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
 				printf("%d", j);
