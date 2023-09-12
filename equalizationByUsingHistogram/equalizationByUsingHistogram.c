@@ -26,6 +26,14 @@ int main() {
 		{4, 3, 3, 5, 5, 5, 5, 5, 4, 4, 6}
 	};
 
+	/*
+		2: 14개
+		3: 22개
+		4: 24개
+		5: 22개
+		6: 18개
+	*/
+
 	showHistogram(originImage);
 
 	return 0;
@@ -53,7 +61,7 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	for (int i = MaxhistogramValue; i >= 0; i--) {     // 높이만큼 반복
 		printf("%2d", i);                               // Y축 수치 표현
 		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) { // 히스토그램 출력
-			if (histogram[j] == MaxhistogramValue) {
+			if (histogram[j] >= i) {
 				printf("#");
 			}
 			else {
@@ -61,5 +69,12 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 			}
 		}
 		printf("\n");
+
+		if (i == 0) {
+			printf("  ");
+			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+				printf("%d", j);
+			}
+		}
 	}
 }
