@@ -12,6 +12,7 @@ void setHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogr
 
 // 히스토그램을 보이는 함수
 void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]);
+void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]);
 
 // 매칭 함수
 void setMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]);
@@ -66,6 +67,9 @@ int main() {
 
 	// 출력 이미지 히스토그램 보이기
 	showHistogram(outputImage);
+
+	// 히스토그램 두개 비교
+	showHistogramDual(originImage, outputImage);
 
 	return 0;
 }
@@ -139,6 +143,73 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 		}
 	}
 	printf("histogram Range: %d \n", histogramRange);
+}
+
+void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
+	long orgImgHistogram[ORIGIN_IMAGE_RANGE] = { 0 }; // 입력 이미지 히스토그램
+	long outImgHistogram[ORIGIN_IMAGE_RANGE] = { 0 }; // 출력 이미지 히스토그램
+	long MaxhistogramValue = 0; // 히스토그램에서 가장 큰값
+
+	// 히스토그램 값 얻기
+	setHistogram(originImage, orgImgHistogram);
+	setHistogram(outputImage, outImgHistogram);
+
+	// 원본 이미지에서 최고값 확인
+	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+		if (orgImgHistogram[i] > MaxhistogramValue) {
+			MaxhistogramValue = orgImgHistogram[i];
+		}
+	}
+	// 출력 이미지에서 최고값 확인
+	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+		if (outImgHistogram[i] > MaxhistogramValue) {
+			MaxhistogramValue = outImgHistogram[i];
+		}
+	}
+
+	// 히스토그램 2개 출력
+	printf("\n");
+	printf("show histogram graph dual: \n");
+	for (int i = MaxhistogramValue; i >= 1; i--) {
+		printf("%2d", i);
+		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+			if (orgImgHistogram[j] == i) {
+				printf("*");
+			}
+			else if (orgImgHistogram[j] >= i) {
+				printf("|");
+			}
+			else {
+				printf(" ");
+			}
+		}
+
+		printf("  ");
+		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+			if (outImgHistogram[j] == i) {
+				printf("*");
+			}
+			else if (outImgHistogram[j] >= i) {
+				printf("|");
+			}
+			else {
+				printf(" ");
+			}
+		}
+		printf("\n");
+
+		if (i == 1) {
+			printf("  ");
+			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+				printf("%d", j);
+			}
+			printf("  ");
+			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+				printf("%d", j);
+			}
+			printf("\n");
+		}
+	}
 }
 
 void setMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
