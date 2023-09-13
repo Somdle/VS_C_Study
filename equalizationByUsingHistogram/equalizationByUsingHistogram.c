@@ -42,6 +42,10 @@ int main() {
 void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	long histogram[ORIGIN_IMAGE_RANGE] = { 0 };
 	long MaxhistogramValue = 0;
+	long histogramRange    = 0;
+
+	long temp_minHistogramPos = 0;
+	long temp_maxHistogramPos = 0;
 
 	// 히스토그램 값 채우기
 	for (int i = 0; i < ORIGIN_IMAGE_Y; i++) {
@@ -57,7 +61,19 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 		}
 	}
 
+	// 히스토그램의 범위 구하기
+	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+		if (histogram[i] != 0 && temp_minHistogramPos == 0) {
+			temp_minHistogramPos = i;
+		}
+		if (histogram[i] != 0) {
+			temp_maxHistogramPos = i;
+		}
+	}
+	histogramRange = temp_maxHistogramPos - temp_minHistogramPos + 1;
+
 	// 히스토그램 출력하기
+	printf("display histogram graph: \n");
 	for (int i = MaxhistogramValue; i >= 1; i--) {     // 높이만큼 반복
 		printf("%2d", i);                               // Y축 수치 표현
 		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) { // 히스토그램 출력
@@ -78,6 +94,8 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
 				printf("%d", j);
 			}
+			printf("\n");
 		}
 	}
+	printf("histogram Range: %d \n", histogramRange);
 }
