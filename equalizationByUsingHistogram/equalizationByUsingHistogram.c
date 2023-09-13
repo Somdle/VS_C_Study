@@ -46,7 +46,7 @@ int main() {
 		*/
 	};
 
-	long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X] = { 0 };
+	long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X] = { 0, };
 
 	// 히스토그램 데이터
 	long histogram[ORIGIN_IMAGE_RANGE] = { 0 };
@@ -107,6 +107,7 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	histogramRange = temp_maxHistogramPos - temp_minHistogramPos + 1;
 
 	// 히스토그램 출력하기
+	printf("\n");
 	printf("show histogram graph: \n");
 	for (int i = MaxhistogramValue; i >= 1; i--) {     // 높이만큼 반복
 		printf("%2d", i);                               // Y축 수치 표현
@@ -167,6 +168,8 @@ void showMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long
 	setC_in_L(c_in_L, c_in);
 	setL_out(L_out, c_in_L);
 
+	printf("\n");
+	printf("matching function table \n");
 	printf("in | h_hat | c_in | c_in_L | L_out \n");
 	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
 		printf("%2d | %2.2lf | %2.2lf | %2.2lf | %2.2lf \n", i, h_hat[i], c_in[i], c_in_L[i], L_out[i]);
