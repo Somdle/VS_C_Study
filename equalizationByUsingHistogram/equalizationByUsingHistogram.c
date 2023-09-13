@@ -3,29 +3,29 @@
 #include <stdio.h>
 #include <math.h>  // round함수 사용을 위함
 
-#define ORIGIN_IMAGE_Y 11    // 이미지의 Y크기
-#define ORIGIN_IMAGE_X 11    // 이미지의 X크기
-#define ORIGIN_IMAGE_RANGE 8 // 이미지의 범위
+#define SIZE_OF_IMAGE_Y 11 // 이미지의 Y크기
+#define SIZE_OF_IMAGE_X 11 // 이미지의 X크기
+#define IMGAE_RANGE 10     // 이미지의 범위
 
 // 히스토그램을 설정하는 함수
-void setHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE]);
+void setHistogram(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X], long histogram[IMGAE_RANGE]);
 
 // 히스토그램을 보이는 함수
-void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]);
-void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]);
+void showHistogram(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X]);
+void showHistogramDual(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X], long outputImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X]);
 
 // 매칭 함수
-void setMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]);
-void showMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE]);
-void setH_hat(double h_hat[ORIGIN_IMAGE_RANGE], long histogram[ORIGIN_IMAGE_RANGE]);   // h-hat(i)      의 값을 구하기
-void setC_in(double c_in[ORIGIN_IMAGE_RANGE], double h_hat[ORIGIN_IMAGE_RANGE]);     // c(in)       의 값을 구하기
-void setC_in_L(double c_in_L[ORIGIN_IMAGE_RANGE], double c_in[ORIGIN_IMAGE_RANGE]); // c(in)*(L-1) 의 값을 구하기
-void setL_out(double L_out[ORIGIN_IMAGE_RANGE], double c_in_L[ORIGIN_IMAGE_RANGE]);   // L(out)      의 값을 구하기
+void setMatchingFunction(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X], long histogram[IMGAE_RANGE], long outputImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X]);
+void showMatchingFunction(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X], long histogram[IMGAE_RANGE]);
+void setH_hat(double h_hat[IMGAE_RANGE], long histogram[IMGAE_RANGE]); // h-hat(i)      의 값을 구하기
+void setC_in(double c_in[IMGAE_RANGE], double h_hat[IMGAE_RANGE]);     // c(in)       의 값을 구하기
+void setC_in_L(double c_in_L[IMGAE_RANGE], double c_in[IMGAE_RANGE]);  // c(in)*(L-1) 의 값을 구하기
+void setL_out(double L_out[IMGAE_RANGE], double c_in_L[IMGAE_RANGE]);  // L(out)      의 값을 구하기
 
 // 메인함수
 int main() {
 	// 원본 이미지 데이터
-	long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X] = 
+	long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X] = 
 	{
 		{2, 4, 4, 4, 3, 2, 2, 3, 3, 4, 5},
 		{2, 3, 4, 5, 5, 6, 6, 6, 6, 2, 2},
@@ -48,10 +48,10 @@ int main() {
 	};
 
 	// 출력이미지 데이터
-	long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X] = { 0, };
+	long outputImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X] = { 0, };
 
 	// 히스토그램 데이터
-	long histogram[ORIGIN_IMAGE_RANGE] = { 0 };
+	long histogram[IMGAE_RANGE] = { 0 };
 
 	// 히스토그램 설정
 	setHistogram(originImage, histogram);
@@ -74,17 +74,17 @@ int main() {
 	return 0;
 }
 
-void setHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE]) {
+void setHistogram(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X], long histogram[IMGAE_RANGE]) {
 	// 히스토그램 값 채우기
-	for (int i = 0; i < ORIGIN_IMAGE_Y; i++) {
-		for (int j = 0; j < ORIGIN_IMAGE_X; j++) {
+	for (int i = 0; i < SIZE_OF_IMAGE_Y; i++) {
+		for (int j = 0; j < SIZE_OF_IMAGE_X; j++) {
 			histogram[originImage[i][j]] += 1;
 		}
 	}
 }
 
-void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
-	long histogram[ORIGIN_IMAGE_RANGE] = { 0 };
+void showHistogram(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X]) {
+	long histogram[IMGAE_RANGE] = { 0 };
 	long MaxhistogramValue = 0; // 히스토그램에서 가장 큰값
 	long histogramRange    = 0; // 히스토그램 유효 범위
 
@@ -92,21 +92,21 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	long temp_maxHistogramPos = 0; // 히스토그램의 유효한 가장 큰   위치
 
 	// 히스토그램 값 채우기
-	for (int i = 0; i < ORIGIN_IMAGE_Y; i++) {
-		for (int j = 0; j < ORIGIN_IMAGE_X; j++) {
+	for (int i = 0; i < SIZE_OF_IMAGE_Y; i++) {
+		for (int j = 0; j < SIZE_OF_IMAGE_X; j++) {
 			histogram[originImage[i][j]] += 1;
 		}
 	}
 
 	// 히스토그램의 최고값 구하기
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+	for (int i = 0; i < IMGAE_RANGE; i++) {
 		if (histogram[i] > MaxhistogramValue) {
 			MaxhistogramValue = histogram[i];
 		}
 	}
 
-	// 히스토그램의 범위 구하기
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+	// 히스토그램의 범위 구하기(가장 작은 위치와 가장 큰 위치를 구함)
+	for (int i = 0; i < IMGAE_RANGE; i++) {
 		if (histogram[i] != 0 && temp_minHistogramPos == 0) {
 			temp_minHistogramPos = i;
 		}
@@ -121,7 +121,7 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	printf("show histogram graph: \n");
 	for (int i = MaxhistogramValue; i >= 1; i--) {     // 높이만큼 반복
 		printf("%2d", i);                               // Y축 수치 표현
-		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) { // 히스토그램 출력
+		for (int j = 0; j < IMGAE_RANGE; j++) { // 히스토그램 출력
 			if (histogram[j] == i) {
 				printf(" *");
 			}
@@ -136,7 +136,7 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 
 		if (i == 1) {
 			printf("  ");
-			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+			for (int j = 0; j < IMGAE_RANGE; j++) {
 				printf("%2d", j);
 			}
 			printf("\n");
@@ -145,9 +145,9 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	printf("histogram Range: %d \n", histogramRange);
 }
 
-void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
-	long orgImgHistogram[ORIGIN_IMAGE_RANGE] = { 0 }; // 입력 이미지 히스토그램
-	long outImgHistogram[ORIGIN_IMAGE_RANGE] = { 0 }; // 출력 이미지 히스토그램
+void showHistogramDual(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X], long outputImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X]) {
+	long orgImgHistogram[IMGAE_RANGE] = { 0 }; // 입력 이미지 히스토그램
+	long outImgHistogram[IMGAE_RANGE] = { 0 }; // 출력 이미지 히스토그램
 	long MaxhistogramValue = 0; // 히스토그램에서 가장 큰값
 
 	long orgImgHistogramRange = 0; // 입력 이미지 히스토그램 범위
@@ -163,7 +163,7 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 	// 입력 히스토그램의 범위 구하기
 	temp_minHistogramPos = 0;
 	temp_maxHistogramPos = 0;
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+	for (int i = 0; i < IMGAE_RANGE; i++) {
 		if (orgImgHistogram[i] != 0 && temp_minHistogramPos == 0) {
 			temp_minHistogramPos = i;
 		}
@@ -176,7 +176,7 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 	// 출력 히스토그램의 범위 구하기
 	temp_minHistogramPos = 0;
 	temp_maxHistogramPos = 0;
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+	for (int i = 0; i < IMGAE_RANGE; i++) {
 		if (outImgHistogram[i] != 0 && temp_minHistogramPos == 0) {
 			temp_minHistogramPos = i;
 		}
@@ -187,13 +187,13 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 	outImgHistogramRange = temp_maxHistogramPos - temp_minHistogramPos + 1;
 
 	// 원본 이미지에서 최고값 확인
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+	for (int i = 0; i < IMGAE_RANGE; i++) {
 		if (orgImgHistogram[i] > MaxhistogramValue) {
 			MaxhistogramValue = orgImgHistogram[i];
 		}
 	}
 	// 출력 이미지에서 최고값 확인
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+	for (int i = 0; i < IMGAE_RANGE; i++) {
 		if (outImgHistogram[i] > MaxhistogramValue) {
 			MaxhistogramValue = outImgHistogram[i];
 		}
@@ -204,7 +204,7 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 	printf("show histogram graph dual: \n");
 	for (int i = MaxhistogramValue; i >= 1; i--) {
 		printf("%2d", i);
-		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+		for (int j = 0; j < IMGAE_RANGE; j++) {
 			if (orgImgHistogram[j] == i) {
 				printf(" *");
 			}
@@ -217,7 +217,7 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 		}
 
 		printf("  ");
-		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+		for (int j = 0; j < IMGAE_RANGE; j++) {
 			if (outImgHistogram[j] == i) {
 				printf(" *");
 			}
@@ -232,11 +232,11 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 
 		if (i == 1) {
 			printf("  ");
-			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+			for (int j = 0; j < IMGAE_RANGE; j++) {
 				printf("%2d", j);
 			}
 			printf("  ");
-			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
+			for (int j = 0; j < IMGAE_RANGE; j++) {
 				printf("%2d", j);
 			}
 			printf("\n");
@@ -245,20 +245,20 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 	printf("Range: %2d, Range: %2d \n", orgImgHistogramRange, outImgHistogramRange);
 }
 
-void setMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
-	double h_hat[ORIGIN_IMAGE_RANGE]  = { 0 };
-	double c_in[ORIGIN_IMAGE_RANGE]   = { 0 };
-	double c_in_L[ORIGIN_IMAGE_RANGE] = { 0 };
-	double L_out[ORIGIN_IMAGE_RANGE]  = { 0 };
+void setMatchingFunction(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X], long histogram[IMGAE_RANGE], long outputImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X]) {
+	double h_hat[IMGAE_RANGE]  = { 0 };
+	double c_in[IMGAE_RANGE]   = { 0 };
+	double c_in_L[IMGAE_RANGE] = { 0 };
+	double L_out[IMGAE_RANGE]  = { 0 };
 
 	setH_hat(h_hat, histogram);
 	setC_in(c_in, h_hat);
 	setC_in_L(c_in_L, c_in);
 	setL_out(L_out, c_in_L);
 
-	for (int i = 0; i < ORIGIN_IMAGE_Y; i++) {
-		for (int j = 0; j < ORIGIN_IMAGE_X; j++) {
-			for (int k = 0; k < ORIGIN_IMAGE_RANGE; k++) {
+	for (int i = 0; i < SIZE_OF_IMAGE_Y; i++) {
+		for (int j = 0; j < SIZE_OF_IMAGE_X; j++) {
+			for (int k = 0; k < IMGAE_RANGE; k++) {
 				if (originImage[i][j] == k) {
 					outputImage[i][j] = L_out[k];
 				}
@@ -267,11 +267,11 @@ void setMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long 
 	}
 }
 
-void showMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE]) {
-	double h_hat[ORIGIN_IMAGE_RANGE]  = { 0 };
-	double c_in[ORIGIN_IMAGE_RANGE]   = { 0 };
-	double c_in_L[ORIGIN_IMAGE_RANGE] = { 0 };
-	double L_out[ORIGIN_IMAGE_RANGE]  = { 0 };
+void showMatchingFunction(long originImage[SIZE_OF_IMAGE_Y][SIZE_OF_IMAGE_X], long histogram[IMGAE_RANGE]) {
+	double h_hat[IMGAE_RANGE]  = { 0 };
+	double c_in[IMGAE_RANGE]   = { 0 };
+	double c_in_L[IMGAE_RANGE] = { 0 };
+	double L_out[IMGAE_RANGE]  = { 0 };
 
 	setH_hat(h_hat, histogram);
 	setC_in(c_in, h_hat);
@@ -281,29 +281,29 @@ void showMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long
 	printf("\n");
 	printf("matching function table \n");
 	printf("in | h_hat | c_in | c_in_L | L_out \n");
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+	for (int i = 0; i < IMGAE_RANGE; i++) {
 		printf("%2d | %2.2lf | %2.2lf | %2.2lf | %2.2lf \n", i, h_hat[i], c_in[i], c_in_L[i], L_out[i]);
 	}
 }
 
-void setH_hat(double h_hat[ORIGIN_IMAGE_RANGE], long histogram[ORIGIN_IMAGE_RANGE]) {
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
-		h_hat[i] = (double)histogram[i] / (double)(ORIGIN_IMAGE_Y * ORIGIN_IMAGE_X);
+void setH_hat(double h_hat[IMGAE_RANGE], long histogram[IMGAE_RANGE]) {
+	for (int i = 0; i < IMGAE_RANGE; i++) {
+		h_hat[i] = (double)histogram[i] / (double)(SIZE_OF_IMAGE_Y * SIZE_OF_IMAGE_X);
 	}
 }
-void setC_in(double c_in[ORIGIN_IMAGE_RANGE], double h_hat[ORIGIN_IMAGE_RANGE]) {
+void setC_in(double c_in[IMGAE_RANGE], double h_hat[IMGAE_RANGE]) {
 	c_in[0] = h_hat[0];
-	for (int i = 1; i < ORIGIN_IMAGE_RANGE; i++) {
+	for (int i = 1; i < IMGAE_RANGE; i++) {
 		c_in[i] = c_in[i - 1] + h_hat[i];
 	}
 }
-void setC_in_L(double c_in_L[ORIGIN_IMAGE_RANGE], double c_in[ORIGIN_IMAGE_RANGE]) {
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
-		c_in_L[i] = c_in[i] * (ORIGIN_IMAGE_RANGE - 1);
+void setC_in_L(double c_in_L[IMGAE_RANGE], double c_in[IMGAE_RANGE]) {
+	for (int i = 0; i < IMGAE_RANGE; i++) {
+		c_in_L[i] = c_in[i] * (IMGAE_RANGE - 1);
 	}
 }
-void setL_out(double L_out[ORIGIN_IMAGE_RANGE], double c_in_L[ORIGIN_IMAGE_RANGE]) {
-	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+void setL_out(double L_out[IMGAE_RANGE], double c_in_L[IMGAE_RANGE]) {
+	for (int i = 0; i < IMGAE_RANGE; i++) {
 		L_out[i] = round(c_in_L[i]);
 	}
 }
