@@ -123,13 +123,13 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 		printf("%2d", i);                               // Y축 수치 표현
 		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) { // 히스토그램 출력
 			if (histogram[j] == i) {
-				printf("*");
+				printf(" *");
 			}
 			else if (histogram[j] >= i) {
-				printf("|");
+				printf(" |");
 			}
 			else {
-				printf(" ");
+				printf("  ");
 			}
 		}
 		printf("\n");
@@ -137,7 +137,7 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 		if (i == 1) {
 			printf("  ");
 			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
-				printf("%d", j);
+				printf("%2d", j);
 			}
 			printf("\n");
 		}
@@ -206,26 +206,26 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 		printf("%2d", i);
 		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
 			if (orgImgHistogram[j] == i) {
-				printf("*");
+				printf(" *");
 			}
 			else if (orgImgHistogram[j] >= i) {
-				printf("|");
+				printf(" |");
 			}
 			else {
-				printf(" ");
+				printf("  ");
 			}
 		}
 
 		printf("  ");
 		for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
 			if (outImgHistogram[j] == i) {
-				printf("*");
+				printf(" *");
 			}
 			else if (outImgHistogram[j] >= i) {
-				printf("|");
+				printf(" |");
 			}
 			else {
-				printf(" ");
+				printf("  ");
 			}
 		}
 		printf("\n");
@@ -233,11 +233,11 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 		if (i == 1) {
 			printf("  ");
 			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
-				printf("%d", j);
+				printf("%2d", j);
 			}
 			printf("  ");
 			for (int j = 0; j < ORIGIN_IMAGE_RANGE; j++) {
-				printf("%d", j);
+				printf("%2d", j);
 			}
 			printf("\n");
 		}
