@@ -246,10 +246,10 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 }
 
 void setMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
-	double h_hat[ORIGIN_IMAGE_RANGE] = { 0 };
-	double c_in[ORIGIN_IMAGE_RANGE] = { 0 };
+	double h_hat[ORIGIN_IMAGE_RANGE]  = { 0 };
+	double c_in[ORIGIN_IMAGE_RANGE]   = { 0 };
 	double c_in_L[ORIGIN_IMAGE_RANGE] = { 0 };
-	double L_out[ORIGIN_IMAGE_RANGE] = { 0 };
+	double L_out[ORIGIN_IMAGE_RANGE]  = { 0 };
 
 	setH_hat(h_hat, histogram);
 	setC_in(c_in, h_hat);
