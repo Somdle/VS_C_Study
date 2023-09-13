@@ -46,19 +46,25 @@ int main() {
 		*/
 	};
 
+	// 출력이미지 데이터
 	long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X] = { 0, };
 
 	// 히스토그램 데이터
 	long histogram[ORIGIN_IMAGE_RANGE] = { 0 };
 
+	// 히스토그램 설정
 	setHistogram(originImage, histogram);
 
+	// 히스토그램 정보 보이기
 	showHistogram(originImage);
 
+	// 매칭 함수 설정(출력 이미지 데이터 입력)
 	setMatchingFunction(originImage, histogram, outputImage);
 
+	// 매칭 함수 내부 과정 보이기
 	showMatchingFunction(originImage, histogram);
 
+	// 출력 이미지 히스토그램 보이기
 	showHistogram(outputImage);
 
 	return 0;
