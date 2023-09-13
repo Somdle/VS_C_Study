@@ -13,8 +13,8 @@ void setHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogr
 void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]);
 
 // 매칭 함수
-void matchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]);
-void setH_hat(double h_hat[ORIGIN_IMAGE_RANGE]);   // h헷(i)      의 값을 구하기
+void matchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE]);
+void setH_hat(double h_hat[ORIGIN_IMAGE_RANGE]);   // h-hat(i)      의 값을 구하기
 void setC_in(double c_in[ORIGIN_IMAGE_RANGE]);     // c(in)       의 값을 구하기
 void setC_in_L(double c_in_L[ORIGIN_IMAGE_RANGE]); // c(in)*(L-1) 의 값을 구하기
 void setL_out(double L_out[ORIGIN_IMAGE_RANGE]);   // L(out)      의 값을 구하기
@@ -51,6 +51,8 @@ int main() {
 
 	showHistogram(originImage);
 
+	matchingFunction(originImage, histogram);
+
 	return 0;
 }
 
@@ -66,7 +68,7 @@ void setHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogr
 void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	long histogram[ORIGIN_IMAGE_RANGE] = { 0 };
 	long MaxhistogramValue = 0; // 히스토그램에서 가장 큰값
-	long histogramRange = 0; // 히스토그램 유효 범위
+	long histogramRange    = 0; // 히스토그램 유효 범위
 
 	long temp_minHistogramPos = 0; // 히스토그램의 유효한 가장 작은 위치
 	long temp_maxHistogramPos = 0; // 히스토그램의 유효한 가장 큰   위치
@@ -124,7 +126,7 @@ void showHistogram(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
 	printf("histogram Range: %d \n", histogramRange);
 }
 
-void matchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
+void matchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE]) {
 	double h_hat[ORIGIN_IMAGE_RANGE]  = { 0 };
 	double c_in[ORIGIN_IMAGE_RANGE]   = { 0 };
 	double c_in_L[ORIGIN_IMAGE_RANGE] = { 0 };
