@@ -150,9 +150,41 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 	long outImgHistogram[ORIGIN_IMAGE_RANGE] = { 0 }; // 출력 이미지 히스토그램
 	long MaxhistogramValue = 0; // 히스토그램에서 가장 큰값
 
+	long orgImgHistogramRange = 0; // 입력 이미지 히스토그램 범위
+	long outImgHistogramRange = 0; // 출력 이미지 히스토그램 범위
+
+	long temp_minHistogramPos = 0; // 히스토그램의 유효한 가장 작은 위치
+	long temp_maxHistogramPos = 0; // 히스토그램의 유효한 가장 큰   위치
+
 	// 히스토그램 값 얻기
 	setHistogram(originImage, orgImgHistogram);
 	setHistogram(outputImage, outImgHistogram);
+
+	// 입력 히스토그램의 범위 구하기
+	temp_minHistogramPos = 0;
+	temp_maxHistogramPos = 0;
+	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+		if (orgImgHistogram[i] != 0 && temp_minHistogramPos == 0) {
+			temp_minHistogramPos = i;
+		}
+		if (orgImgHistogram[i] != 0) {
+			temp_maxHistogramPos = i;
+		}
+	}
+	orgImgHistogramRange = temp_maxHistogramPos - temp_minHistogramPos + 1;
+
+	// 출력 히스토그램의 범위 구하기
+	temp_minHistogramPos = 0;
+	temp_maxHistogramPos = 0;
+	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
+		if (outImgHistogram[i] != 0 && temp_minHistogramPos == 0) {
+			temp_minHistogramPos = i;
+		}
+		if (outImgHistogram[i] != 0) {
+			temp_maxHistogramPos = i;
+		}
+	}
+	outImgHistogramRange = temp_maxHistogramPos - temp_minHistogramPos + 1;
 
 	// 원본 이미지에서 최고값 확인
 	for (int i = 0; i < ORIGIN_IMAGE_RANGE; i++) {
@@ -210,6 +242,7 @@ void showHistogramDual(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long ou
 			printf("\n");
 		}
 	}
+	printf("Range: %2d, Range: %2d \n", orgImgHistogramRange, outImgHistogramRange);
 }
 
 void setMatchingFunction(long originImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X], long histogram[ORIGIN_IMAGE_RANGE], long outputImage[ORIGIN_IMAGE_Y][ORIGIN_IMAGE_X]) {
